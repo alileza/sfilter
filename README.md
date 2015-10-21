@@ -15,6 +15,18 @@ SFilter is lightweight (1.5KB) javascript library for searching through array wi
 ```
 
 ## Installation
+
+### using NPM
+```sh
+npm install sfilter --save
+```
+On NodeJS you have to initialize the SFilter object before you can use it.
+```javascript
+var sfilter = new SFilter();
+sfilter.setResource(["a","b"]);
+```
+
+### using Browser
 ```sh
 git clone git@github.com:alileza/sfilter.git
 cd sfilter

@@ -1,6 +1,6 @@
 class SFilter
 
-	constructor: ({ resources, options }) ->
+	constructor: () ->
 		@Resources = if resources? then resources else ["Javascript", "Hack-lang", "Go-lang", "Coffeescript", "PHP", "Ruby", "Swift", "Python", "Perl", "Java", "Scala", "Clojure", "Erlang", "Elixir", "C", "C++", "C#"]
 		@limit = 5
 		@results = []

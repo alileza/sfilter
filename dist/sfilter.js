@@ -42,21 +42,34 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var SFilter;
+
+	SFilter = __webpack_require__(1);
+
+	window.SFilter = new SFilter({});
+
+
+/***/ },
+/* 1 */
 /***/ function(module, exports) {
 
-	var SmartSearch,
+	var SFilter,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-	SmartSearch = (function() {
-	  function SmartSearch(arg) {
+	SFilter = (function() {
+	  function SFilter(arg) {
 	    var options, resources;
 	    resources = arg.resources, options = arg.options;
-	    this.search = bind(this.search, this);
-	    this.Resources = resources ? resources : ["Javascript", "Hack-lang", "Go-lang", "Coffeescript", "PHP", "Ruby", "Swift", "Python", "Perl", "Java", "Scala", "Clojure", "Erlang", "Elixir", "C", "C++", "C#"];
-	    this.limit = 3;
+	    this.find = bind(this.find, this);
+	    this.sort = bind(this.sort, this);
+	    this.Resources = resources != null ? resources : ["Javascript", "Hack-lang", "Go-lang", "Coffeescript", "PHP", "Ruby", "Swift", "Python", "Perl", "Java", "Scala", "Clojure", "Erlang", "Elixir", "C", "C++", "C#"];
+	    this.limit = 5;
+	    this.results = [];
 	  }
 
-	  SmartSearch.prototype.findSimilarity = function(query, expectation) {
+	  SFilter.prototype.findSimilarity = function(query, expectation) {
 	    var diff, i, length, min, plus;
 	    plus = 0;
 	    min = 0;
@@ -77,16 +90,22 @@
 	    return (plus / (plus + min)) * 100;
 	  };
 
-	  SmartSearch.prototype.setResources = function(res) {
+	  SFilter.prototype.setResources = function(res) {
 	    return this.Resources = res;
 	  };
 
-	  SmartSearch.prototype.search = function(searchString) {
-	    var res, results, ret;
-	    if (!this.Resources) {
-	      return console.warn('no resources has been set, read the docs https://github.com/alileza/smart-search#setResources');
-	    }
-	    results = this.Resources.map((function(_this) {
+	  SFilter.prototype.setLimit = function(res) {
+	    return this.limit = res;
+	  };
+
+	  SFilter.prototype.sort = function(key) {
+	    return this.results = this.results.sort(function(a, b) {
+	      return b[key] - a[key];
+	    });
+	  };
+
+	  SFilter.prototype.calculate = function(searchString) {
+	    this.results = this.Resources.map((function(_this) {
 	      return function(item) {
 	        return {
 	          name: item,
@@ -94,25 +113,29 @@
 	        };
 	      };
 	    })(this));
-	    results = results.sort(function(a, b) {
-	      return b.score - a.score;
-	    });
-	    ret = [];
-	    res = 0;
-	    while (res < this.limit) {
-	      ret.push(results[res]);
-	      res++;
-	    }
-	    return ret;
+	    return this;
 	  };
 
-	  return SmartSearch;
+	  SFilter.prototype.find = function(searchString) {
+	    var i, resultFinal;
+	    if (!this.Resources) {
+	      return console.warn('no resources has been set, read the docs https://github.com/alileza/sfilter#setResources');
+	    }
+	    this.calculate(searchString).sort('score');
+	    resultFinal = [];
+	    i = 0;
+	    while (i < this.limit) {
+	      resultFinal.push(this.results[i].name);
+	      i++;
+	    }
+	    return resultFinal;
+	  };
+
+	  return SFilter;
 
 	})();
 
-	SmartSearch = new SmartSearch({});
-
-	console.dir(SmartSearch.search('lang'));
+	module.exports = SFilter;
 
 
 /***/ }

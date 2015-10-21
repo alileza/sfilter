@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<script src="./dist/sfilter.js"></script>
+<script>
+		// Set resources array
+		SFilter.setResources(["Javascript", "Hack-lang", "Go-lang", "Coffeescript", "PHP", "Ruby", "Swift", "Python", "Perl", "Java", "Scala", "Clojure", "Erlang", "Elixir", "C", "C++", "C#"]);
+
+		// Set response limit
+		SFilter.setLimit(2);
+
+		alert( SFilter.find("jvscript") );
+		// Return should be ["Javascript", "Coffeescript"]
+		// Sorted by most similar words
+		
+</script>
+</body>
+</html>

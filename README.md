@@ -3,6 +3,7 @@
 SFilter is lightweight (1.5KB) javascript library for searching through array with fault tolerant.
 
 ## Example
+### on web
 ```html
 <script src="/dist/sfilter.js"></script>
 <script>
@@ -14,17 +15,22 @@ SFilter is lightweight (1.5KB) javascript library for searching through array wi
 </script>
 ```
 
+### on NodeJS
+```javascript
+var sfilter = require('sfilter');
+var sf = new sfilter();
+sf.setResources(["Java","php","node","scala","hacklang"]);
+sf.setLimit(2);
+console.dir ( sf.find("scalde") );
+```
+
 ## Installation
 
 ### using NPM
 ```sh
 npm install sfilter --save
 ```
-On NodeJS you have to initialize the SFilter object before you can use it.
-```javascript
-var sfilter = new SFilter();
-sfilter.setResource(["a","b"]);
-```
+
 
 ### using Browser
 ```sh

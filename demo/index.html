@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<input onkeyup="search(this.value)" type="text">
+<ul id="results">	</ul>
+<script src="./dist/sfilter.js"></script>
+<script>
+		// Set resources array
+		var resources = ["Javascript", "Hack-lang", "Go-lang", "Coffeescript", "PHP", "Ruby", "Swift", "Python", "Perl", "Java", "Scala", "Clojure", "Erlang", "Elixir", "C", "C++", "C#"];
+
+
+		// Return should be ["Javascript", "Coffeescript"]
+		// Sorted by most similar words
+
+		var render = function(resources){
+			var container = document.getElementById('results');
+			container.innerHTML = "";
+			resources.forEach( function(item) {
+				var itemDom = document.createElement('li');
+				itemDom.innerText = item.text;
+				container.appendChild(itemDom);
+			});
+		}
+
+		var search = function(query){
+			// sf.find([resources array],[query search], [object key], [limit])
+			console.dir(sf.find(resources, query, null, 5) )
+			render( sf.find(resources, query, null, 5) );
+
+		}
+
+
+
+</script>
+</body>
+</html>
